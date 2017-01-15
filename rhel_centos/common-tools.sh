@@ -2,10 +2,10 @@
 
 #----------------------------------------------------------------------------
 # Installation
-apt-get update
-apt-get -y install git
-apt-get -y install unzip
-apt-get -y install screen
+yum update
+yum -y install git
+yum -y install unzip
+yum -y install screen
 
 #----------------------------------------------------------------------------
 # Git ignore permission changes

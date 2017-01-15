@@ -3,8 +3,9 @@
 #----------------------------------------------------------------------------
 # Download and Run Install script
 curl -sL https://deb.nodesource.com/setup_6.x | bash -
-apt-get -y install nodejs
-apt-get -y install build-essential
+yum -y install nodejs
+yum -y install nodejs
+yum -y install gcc-c++ make
 
 #----------------------------------------------------------------------------
 # Install basic global modules
