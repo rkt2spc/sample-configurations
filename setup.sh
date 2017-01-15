@@ -42,14 +42,14 @@ done
 #----------------------------------------------------------------------------
 # Variables
 bash_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-setup_dir = "${bash_dir}"
+setup_dir="${bash_dir}"
 
 #----------------------------------------------------------------------------
 # Pick setup directory base on os
 if [ $os == 'ubuntu' ] 
-then setup_dir = "${bash_dir}/ubuntu"
-elif [ $os == 'rhel' || $os == 'centos' ]
-then setup_dir = "${bash_dir}/rhel_centos"
+then setup_dir="${bash_dir}/ubuntu"
+elif [[ $os == 'rhel' || $os == 'centos' ]]
+then setup_dir="${bash_dir}/rhel_centos"
 else
     echo "Invalid operation-system option: ${os}"
     exit 1

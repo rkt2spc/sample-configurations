@@ -13,7 +13,7 @@ fi
 
 #----------------------------------------------------------------------------
 # Save current working directory
-CUR_DIR = $PWD;
+CUR_DIR=$PWD;
 
 #----------------------------------------------------------------------------
 # Create temporary directory and cd to it
