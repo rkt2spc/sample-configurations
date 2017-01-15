@@ -7,7 +7,7 @@ bash_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 chmod 700 "${bash_dir}/args.sh";
 
 # Execute files
-"${bash_dir}/args.sh";
+source "${bash_dir}/args.sh";
 
 
 # chmod 700 "$DIR"/common-tools.sh
