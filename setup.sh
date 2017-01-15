@@ -64,8 +64,8 @@ chmod 700 "${setup_dir}/common-tools.sh"
 
 #----------------------------------------------------------------------------
 # Split stack to array
-IFS=',' read -r -a stack <<< "$string"
-for tech in "${stack[@]}"
+IFS=',' read -r -a technologies <<< "$stack"
+for tech in "${technologies[@]}"
 do
     case $tech in
         nodejs|mongodb|consul|letsencrypt)
