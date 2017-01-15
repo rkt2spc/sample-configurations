@@ -47,9 +47,11 @@ setup_dir="${bash_dir}"
 #----------------------------------------------------------------------------
 # Pick setup directory base on os
 if [ $os == 'ubuntu' ] 
-then setup_dir="${bash_dir}/ubuntu"
+then
+    setup_dir="${bash_dir}/ubuntu"
 elif [[ $os == 'rhel' || $os == 'centos' ]]
-then setup_dir="${bash_dir}/rhel_centos"
+then
+    setup_dir="${bash_dir}/rhel_centos"
 else
     echo "Invalid operation-system option: ${os}"
     exit 1
@@ -69,6 +71,7 @@ do
         nodejs|mongodb|consul|letsencrypt)
             chmod 700 "${setup_dir}/${tech}.sh"
             ( source "${setup_dir}/${tech}.sh" )
+            ;;
         *)
             echo "Un-supported technology ${tech}, no setup option"
             ;;
