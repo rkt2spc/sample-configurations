@@ -41,8 +41,8 @@ done
 
 #----------------------------------------------------------------------------
 # Variables
-bash_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
-setup_dir = '';
+bash_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+setup_dir = "${bash_dir}"
 
 #----------------------------------------------------------------------------
 # Pick setup directory base on os
