@@ -9,7 +9,7 @@ for flag in "$@"
 do
     case $flag in
         -os=*|--operation-system=*)
-            os="${i#*=}"
+            os="${flag#*=}"
             if [[ $os != 'ubuntu' && $os != 'rhel' && $os != 'centos' ]]
             then
                 echo "Unexpected option $flag, value should be one of ['ubuntu', 'rhel', 'centos'], using default value 'ubuntu' instead";
@@ -18,7 +18,7 @@ do
             shift
             ;;
         -arch=*|--architecture=*)
-            arch="${i#*=}"
+            arch="${flag#*=}"
             if [[ $arch != 'x32' && $arch != 'x64' ]]
             then
                 echo "Unexpected option $flag, value should be one of ['x32', 'x64'], using default value 'x64' instead";
@@ -33,5 +33,5 @@ do
 done
 
 # Print out arguments
-echo "os = ${os}"
-echo "arch = ${arch}"
+echo "os = $os"
+echo "arch = $arch"
