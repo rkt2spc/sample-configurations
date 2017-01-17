@@ -5,14 +5,14 @@
 echo ""
 echo ""
 echo "##################################################################################"
-echo "# Installing MongoDB                                                             #"
+echo "# Installing NGINX                                                               #"
 echo "##################################################################################"
 
 #----------------------------------------------------------------------------
 # Installation
-echo "[mongodb-org-3.4]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/7/mongodb-org/3.0/x86_64/
-gpgcheck=1
-enabled=1" | tee /etc/yum.repos.d/mongodb.repo
-yum -y install mongodb-org
+echo "[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/mainline/${os}/7/$basearch/
+gpgcheck=0
+enabled=1" | tee /etc/yum.repos.d/nginx.repo
+yum update

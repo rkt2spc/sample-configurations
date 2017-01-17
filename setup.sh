@@ -4,7 +4,7 @@
 # Arguments
 os='ubuntu'
 arch='x64'
-stack='nodejs,mongodb,consul,letsencrypt'
+stack='nodejs,mongodb,consul,nginx,letsencrypt'
 
 #----------------------------------------------------------------------------
 # Extract Arguments
@@ -68,7 +68,7 @@ IFS=',' read -r -a technologies <<< "$stack"
 for tech in "${technologies[@]}"
 do
     case $tech in
-        nodejs|mongodb|consul|letsencrypt)
+        nodejs|mongodb|consul|nginx|letsencrypt)
             chmod 700 "${setup_dir}/${tech}.sh"
             ( source "${setup_dir}/${tech}.sh" )
             ;;

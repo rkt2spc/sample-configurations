@@ -11,6 +11,8 @@ echo "##########################################################################
 #----------------------------------------------------------------------------
 # Installation
 yum update
+yum -y install curl
+yum -y install openssl
 yum -y install git
 yum -y install unzip
 yum -y install screen
