@@ -46,3 +46,8 @@ echo "Deleted temp working directory ${TEMP_DIR}"
 #----------------------------------------------------------------------------
 # cd back to current working directory
 cd $CUR_DIR
+
+#----------------------------------------------------------------------------
+# Routing Consul DNS PORT
+iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 53 -j REDIRECT --to-ports 8600
+iptables -t nat -I OUTPUT -p udp -d 127.0.0.1 --dport 53 -j REDIRECT --to-ports 8600

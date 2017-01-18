@@ -10,5 +10,5 @@ echo "##########################################################################
 
 #----------------------------------------------------------------------------
 # Installation
-apt-get -y install letsencrypt
+yum -y install certbot
 openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048

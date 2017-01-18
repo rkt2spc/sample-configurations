@@ -3,7 +3,8 @@
 #----------------------------------------------------------------------------
 # Arguments
 os='ubuntu'
-domain='bn-gateway.nmtuan.me'
+arch='x64'
+stack='nodejs,mongodb,consul,nginx,letsencrypt'
 
 #----------------------------------------------------------------------------
 # Extract Arguments
@@ -19,8 +20,17 @@ do
             fi
             shift
             ;;
-        -d=*|--domain=*)
-            domain="${flag#*=}"
+        -arch=*|--architecture=*)
+            arch="${flag#*=}"
+            if [[ $arch != 'x32' && $arch != 'x64' ]]
+            then
+                echo "Unexpected option ${flag}, value should be one of ['x32', 'x64'], using default value 'x64' instead";
+                arch='x64'
+            fi
+            shift
+            ;;
+        -stack=*)
+            stack="${flag#*=}"
             shift
             ;;
         *)
@@ -30,42 +40,40 @@ do
 done
 
 #----------------------------------------------------------------------------
-# Stop NGINX
-nginx -s quit
+# Variables
+bash_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+setup_dir="${bash_dir}"
 
 #----------------------------------------------------------------------------
-# Start letsencrypt, accquire certs
+# Pick setup directory base on os
 if [ $os == 'ubuntu' ] 
 then
-    letsencrypt certonly --standalone -d "${domain}"
+    setup_dir="${bash_dir}/ubuntu"
 elif [[ $os == 'rhel' || $os == 'centos' ]]
 then
-    certbot certonly --standalone -d "${domain}"
+    setup_dir="${bash_dir}/rhel_centos"
 else
     echo "Invalid operation-system option: ${os}"
     exit 1
 fi
 
 #----------------------------------------------------------------------------
-# Edit NGINX Configuration file
-cat nginx.conf | tee /etc/nginx/sites-available/default
-sed -i -- "s/your_domain_name/${domain}/g" /etc/nginx/sites-available/default
+# Setup common tools
+chmod 700 "${setup_dir}/common-tools.sh"
+( source "${setup_dir}/common-tools.sh" )
 
 #----------------------------------------------------------------------------
-# Start NGINX
-nginx
-
-#----------------------------------------------------------------------------
-# Cron Job Auto CERTs renewal
-if [ $os == 'ubuntu' ] 
-then
-    cronjob = '30 2 * * 1 "letsencrypt renew --pre-hook "nginx -s quit" --post-hook "nginx"';
-    ( crontab -l | grep -v -F "${cronjob}" ; echo "${cronjob}" ) | crontab -
-elif [[ $os == 'rhel' || $os == 'centos' ]]
-then
-    cronjob = '30 2 * * 1 "certbot renew --pre-hook "nginx -s quit" --post-hook "nginx"';
-    ( crontab -l | grep -v -F "${cronjob}" ; echo "${cronjob}" ) | crontab -    
-else
-    echo "Invalid operation-system option: ${os}"
-    exit 1
-fi
+# Split stack to array
+IFS=',' read -r -a technologies <<< "$stack"
+for tech in "${technologies[@]}"
+do
+    case $tech in
+        nodejs|mongodb|consul|nginx|letsencrypt)
+            chmod 700 "${setup_dir}/${tech}.sh"
+            ( source "${setup_dir}/${tech}.sh" )
+            ;;
+        *)
+            echo "Un-supported technology ${tech}, no setup option"
+            ;;
+    esac
+done
