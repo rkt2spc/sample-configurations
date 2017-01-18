@@ -36,7 +36,7 @@ rm *.zip
 
 #----------------------------------------------------------------------------
 # Move unzipped bundle to path
-mv -fv "${TEMP_DIR}/*" '/usr/local/bin'
+mv -fv $TEMP_DIR/* '/usr/local/bin'
 
 #----------------------------------------------------------------------------
 # Clean up the temp directory
