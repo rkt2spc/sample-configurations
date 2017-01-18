@@ -59,11 +59,11 @@ nginx
 # Cron Job Auto CERTs renewal
 if [ $os == 'ubuntu' ] 
 then
-    cronjob = '30 2 * * 1 "letsencrypt renew --pre-hook "nginx -s quit" --post-hook "nginx"';
+    cronjob='30 2 * * 1 "letsencrypt renew --pre-hook "nginx -s quit" --post-hook "nginx"';
     ( crontab -l | grep -v -F "${cronjob}" ; echo "${cronjob}" ) | crontab -
 elif [[ $os == 'rhel' || $os == 'centos' ]]
 then
-    cronjob = '30 2 * * 1 "certbot renew --pre-hook "nginx -s quit" --post-hook "nginx"';
+    cronjob='30 2 * * 1 "certbot renew --pre-hook "nginx -s quit" --post-hook "nginx"';
     ( crontab -l | grep -v -F "${cronjob}" ; echo "${cronjob}" ) | crontab -    
 else
     echo "Invalid operation-system option: ${os}"
