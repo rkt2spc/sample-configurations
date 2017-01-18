@@ -1,0 +1,25 @@
+{
+	"server": false,
+	"data_dir": "/tmp/consul",
+	"encrypt": "G45u1z1iJiToivsWDV09qg==",
+	"ui": true,
+	"recursors": [
+		"8.8.8.8",
+		"8.8.4.4"
+	],
+	"checks": [
+		{
+			"name": "Inbound check",
+			"http": "http://127.0.0.1:8500/v1/agent/self",
+			"interval": "30s",
+			"timeout": "2s"
+		},
+		{
+			"name": "Outbout check",
+			"http": "https://www.wikipedia.org",
+			"interval": "1m",
+			"timeout": "5s"
+		}
+	],
+	"start_join": ["172.31.3.119"]
+}
