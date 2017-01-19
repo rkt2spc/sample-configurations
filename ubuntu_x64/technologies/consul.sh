@@ -42,5 +42,8 @@ cd $CUR_DIR
 
 #----------------------------------------------------------------------------
 # Routing Consul DNS PORT
-iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 53 -j REDIRECT --to-ports 8600
-iptables -t nat -I OUTPUT -p udp -d 127.0.0.1 --dport 53 -j REDIRECT --to-ports 8600
+
+if [ -z iptables-save -t nat | grep -- 'OUTPUT -d 127.0.0.1/32 -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600' ] then
+  iptables -t nat -I OUTPUT -d 127.0.0.1/32 -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
+if [ -z iptables-save -t nat | grep -- 'OUTPUT -d 127.0.0.1/32 -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600' ] then
+  iptables -t nat -I OUTPUT -d 127.0.0.1/32 -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
