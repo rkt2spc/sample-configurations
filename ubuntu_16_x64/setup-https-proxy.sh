@@ -43,8 +43,8 @@ openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 #----------------------------------------------------------------------------
 # Run HTTPS NGINX
 cat "${bash_dir}/../configs/nginx.d/https-proxy.conf" | tee /etc/nginx/nginx.conf
-sed -i -- "s/your_domain_name/${domains//,/ }/g" /etc/nginx/nginx.conf
-sed -i -- "s/your_proxy/${proxy}/g" /etc/nginx/nginx.conf
+sed -i -- "s~your_domain_name~${domains//,/ }~g" /etc/nginx/nginx.conf
+sed -i -- "s~your_proxy~${proxy}~g" /etc/nginx/nginx.conf s:?page=one&:pageone:g
 nginx -s reload
 
 #----------------------------------------------------------------------------
