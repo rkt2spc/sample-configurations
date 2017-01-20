@@ -38,7 +38,8 @@ ${bash_dir}/install.sh -stack=nginx,letsencrypt
 openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 cat "${bash_dir}/../configs/nginx.d/acme-webroot.conf" | tee /etc/nginx/nginx.conf
 nginx
-letsencrypt certonly --webroot -w /var/www/html -d "${domains}"
+mkdir /var/acme
+letsencrypt certonly --webroot -w /var/acme -d "${domains}"
 #----------------------------------------------------------------------------
 # Run HTTPS NGINX
 cat "${bash_dir}/../configs/nginx.d/https-proxy.conf" | tee /etc/nginx/nginx.conf
