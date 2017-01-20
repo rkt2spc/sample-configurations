@@ -43,7 +43,7 @@ letsencrypt certonly --webroot -w /var/www/html -d "${domains}"
 # Run HTTPS NGINX
 cat "${bash_dir}/../configs/nginx.d/https-proxy.conf" | tee /etc/nginx/nginx.conf
 sed -i -- "s~your_domain_name~${domains//,/ }~g" /etc/nginx/nginx.conf
-sed -i -- "s~your_proxy~${proxy}~g" /etc/nginx/nginx.conf s:?page=one&:pageone:g
+sed -i -- "s~your_proxy~${proxy}~g" /etc/nginx/nginx.conf
 nginx -s reload
 
 #----------------------------------------------------------------------------
