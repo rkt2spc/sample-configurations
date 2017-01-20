@@ -49,5 +49,5 @@ nginx -s reload
 
 #----------------------------------------------------------------------------
 # Cron Job Auto CERTs renewal
-cronjob='30 2 * * 1 "letsencrypt renew --pre-hook "nginx -s quit" --post-hook "nginx"';
+cronjob='30 2 * * 1 "letsencrypt renew"';
 ( crontab -l | grep -v -F "${cronjob}" ; echo "${cronjob}" ) | crontab -
