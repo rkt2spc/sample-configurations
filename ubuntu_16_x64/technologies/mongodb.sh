@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #----------------------------------------------------------------------------
 # Notice
@@ -10,9 +10,11 @@ echo "##########################################################################
 
 #----------------------------------------------------------------------------
 # Installation
-echo "[mongodb-org-3.4]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/7/mongodb-org/3.0/x86_64/
-gpgcheck=1
-enabled=1" | tee /etc/yum.repos.d/mongodb.repo
-yum -y install mongodb-org
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+apt-get update
+apt-get -y install mongodb-org
+
+#----------------------------------------------------------------------------
+# Run mongodb
+service mongod start

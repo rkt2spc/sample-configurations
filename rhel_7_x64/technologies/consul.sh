@@ -10,14 +10,7 @@ echo "##########################################################################
 
 #----------------------------------------------------------------------------
 # Set Download Url
-if [ $arch == 'x32' ]; then
-  DOWNLOAD_URL='https://releases.hashicorp.com/consul/0.7.2/consul_0.7.2_linux_386.zip'
-elif [ $arch == 'x64' ]; then
-  DOWNLOAD_URL='https://releases.hashicorp.com/consul/0.7.2/consul_0.7.2_linux_amd64.zip'
-else
-  echo 'Invalid system architecture option: ${arch}'
-  exit 1
-fi
+DOWNLOAD_URL='https://releases.hashicorp.com/consul/0.7.2/consul_0.7.2_linux_amd64.zip'
 
 #----------------------------------------------------------------------------
 # Save current working directory
@@ -49,5 +42,22 @@ cd $CUR_DIR
 
 #----------------------------------------------------------------------------
 # Routing Consul DNS PORT
-iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 53 -j REDIRECT --to-ports 8600
-iptables -t nat -I OUTPUT -p udp -d 127.0.0.1 --dport 53 -j REDIRECT --to-ports 8600
+#----------------------------------------------------------------------------
+# Routing Consul DNS TCP PORT
+if [ -z "$(iptables-save -t nat | grep -- 'OUTPUT -d 127.0.0.1/32 -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600')" ]
+then
+    iptables -t nat -I OUTPUT -d 127.0.0.1/32 -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
+    echo 'Consul install: Added dns tcp redirect'
+else
+    echo 'Consul install: Existed dns tcp redirect'
+fi
+
+#----------------------------------------------------------------------------
+# Routing Consul DNS UDP PORT
+if [ -z "$(iptables-save -t nat | grep -- 'OUTPUT -d 127.0.0.1/32 -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600')" ]
+then
+    iptables -t nat -I OUTPUT -d 127.0.0.1/32 -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+    echo 'Consul install: Added dns udp redirect'
+else
+    echo 'Consul install: Existed dns udp redirect'
+fi

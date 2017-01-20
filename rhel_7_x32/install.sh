@@ -22,12 +22,12 @@ done
 #----------------------------------------------------------------------------
 # Variables
 bash_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-setup_dir="${bash_dir}"
+sources_dir="${bash_dir}/techonologies"
 
 #----------------------------------------------------------------------------
 # Setup common tools
-chmod 700 "${setup_dir}/common-tools.sh"
-( source "${setup_dir}/common-tools.sh" )
+chmod 700 "${sources_dir}/common-tools.sh"
+( source "${sources_dir}/common-tools.sh" )
 
 #----------------------------------------------------------------------------
 # Split stack to array
@@ -36,8 +36,8 @@ for tech in "${technologies[@]}"
 do
     case $tech in
         nodejs|mongodb|consul|nginx|letsencrypt)
-            chmod 700 "${setup_dir}/${tech}.sh"
-            ( source "${setup_dir}/${tech}.sh" )
+            chmod 700 "${sources_dir}/${tech}.sh"
+            ( source "${sources_dir}/${tech}.sh" )
             ;;
         *)
             echo "Un-supported technology ${tech}, no setup option"
