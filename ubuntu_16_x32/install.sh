@@ -22,7 +22,7 @@ done
 #----------------------------------------------------------------------------
 # Variables
 bash_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-sources_dir="${bash_dir}/techonologies"
+sources_dir="${bash_dir}/technologies"
 
 #----------------------------------------------------------------------------
 # Setup common tools

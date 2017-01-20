@@ -10,7 +10,7 @@ proxy='http://localhost:8080'
 for flag in "$@"
 do
     case $flag in
-        -d=*|--domains=*)
+        -d=*|--domain=*|--domains=*)
             domains="${flag#*=}"
             shift
             ;;
