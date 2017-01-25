@@ -9,7 +9,7 @@ stack='nodejs,mongodb,consul,nginx,letsencrypt'
 for flag in "$@"
 do
     case $flag in
-        -stack=*)
+        -s=*|--stack=*)
             stack="${flag#*=}"
             shift
             ;;
