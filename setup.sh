@@ -48,7 +48,7 @@ fi
 
 #----------------------------------------------------------------------------
 # Edit NGINX Configuration file
-cat nginx.conf | tee /etc/nginx/sites-available/default
+cat nginx.conf > /etc/nginx/sites-available/default
 sed -i -- "s/your_domain_name/${domain}/g" /etc/nginx/sites-available/default
 
 #----------------------------------------------------------------------------

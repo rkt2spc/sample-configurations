@@ -36,18 +36,23 @@ ${bash_dir}/install.sh -stack=nginx,letsencrypt
 #----------------------------------------------------------------------------
 # Config SSL/TLS Certs
 openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
-cat "${bash_dir}/../configs/nginx.d/acme-webroot.conf" | tee /etc/nginx/nginx.conf
+cat "${bash_dir}/../configs/nginx.d/acme-webroot.conf" > /etc/nginx/nginx.conf
 nginx
 mkdir /var/acme
 letsencrypt certonly --webroot -w /var/acme -d "${domains}"
 #----------------------------------------------------------------------------
 # Run HTTPS NGINX
-cat "${bash_dir}/../configs/nginx.d/https-proxy.conf" | tee /etc/nginx/nginx.conf
-sed -i -- "s~your_domain_name~${domains//,/ }~g" /etc/nginx/nginx.conf
-sed -i -- "s~your_proxy~${proxy}~g" /etc/nginx/nginx.conf
+cat "${bash_dir}/../configs/nginx.d/https-proxy.conf" > /etc/nginx/nginx.conf
+sed -i -- "s~your_server_name~${domains//,/ }~g" /etc/nginx/nginx.conf
+IFS=',' read -ra domains_array <<< "${domains}"
+sed -i -- "s~your_ssl_certificate~/etc/letsencrypt/live/${domain_arrays[0]}/fullchain.pem~g" /etc/nginx/nginx.conf
+sed -i -- "s~your_ssl_certificate_key~/etc/letsencrypt/live/${domain_arrays[0]}/privkey.pem~g" /etc/nginx/nginx.conf
+sed -i -- "s~your_proxy_pass~${proxy}~g" /etc/nginx/nginx.conf
 nginx -s reload
 
 #----------------------------------------------------------------------------
 # Cron Job Auto CERTs renewal
-cronjob='30 2 * * 1 "letsencrypt renew"';
+cronjob='30 2 * * 1 "letsencrypt renew --post-hook="nginx -s reload""';
+( crontab -l | grep -v -F "${cronjob}" ; echo "${cronjob}" ) | crontab -
+cronjob='@reboot "letsencrypt renew --post-hook="nginx -s reload""';
 ( crontab -l | grep -v -F "${cronjob}" ; echo "${cronjob}" ) | crontab -
