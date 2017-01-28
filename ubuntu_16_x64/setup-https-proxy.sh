@@ -45,8 +45,8 @@ letsencrypt certonly --webroot -w /var/acme -d "${domains}"
 cat "${bash_dir}/../configs/nginx.d/https-proxy.conf" > /etc/nginx/nginx.conf
 sed -i -- "s~your_server_name~${domains//,/ }~g" /etc/nginx/nginx.conf
 IFS=',' read -ra domains_array <<< "${domains}"
-sed -i -- "s~your_ssl_certificate~/etc/letsencrypt/live/${domains_array[0]}/fullchain.pem~g" /etc/nginx/nginx.conf
-sed -i -- "s~your_ssl_certificate_key~/etc/letsencrypt/live/${domains_array[0]}/privkey.pem~g" /etc/nginx/nginx.conf
+sed -i -- "s~your_ssl_fullchain~/etc/letsencrypt/live/${domains_array[0]}/fullchain.pem~g" /etc/nginx/nginx.conf
+sed -i -- "s~your_ssl_privkey~/etc/letsencrypt/live/${domains_array[0]}/privkey.pem~g" /etc/nginx/nginx.conf
 sed -i -- "s~your_proxy_pass~${proxy}~g" /etc/nginx/nginx.conf
 nginx -s reload
 
