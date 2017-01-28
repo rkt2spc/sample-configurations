@@ -26,8 +26,8 @@ sources_dir="${bash_dir}/technologies"
 
 #----------------------------------------------------------------------------
 # Setup common tools
-chmod 700 "${sources_dir}/common-tools.sh"
-( source "${sources_dir}/common-tools.sh" )
+# chmod 700 "${sources_dir}/common-tools.sh"
+# ( source "${sources_dir}/common-tools.sh" )
 
 #----------------------------------------------------------------------------
 # Split stack to array
@@ -35,7 +35,7 @@ IFS=',' read -r -a technologies <<< "$stack"
 for tech in "${technologies[@]}"
 do
     case $tech in
-        nodejs|mongodb|consul|nginx|letsencrypt)
+        common-tools|nodejs|mongodb|consul|nginx|letsencrypt)
             chmod 700 "${sources_dir}/${tech}.sh"
             ( source "${sources_dir}/${tech}.sh" )
             ;;
