@@ -31,7 +31,7 @@ bash_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #----------------------------------------------------------------------------
 # Install stuffs
 chmod 700 "${bash_dir}/install.sh"
-${bash_dir}/install.sh --stack=common-tools,nginx,letsencrypt
+${bash_dir}/install.sh --stack=nginx,letsencrypt
 
 #----------------------------------------------------------------------------
 # Config SSL/TLS Certs
